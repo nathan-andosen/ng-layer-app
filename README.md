@@ -1,27 +1,97 @@
-# NgLayerApp
+# Layer architecture for web apps
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.19.
+* https://medium.com/hackernoon/architecting-single-page-applications-b842ea633c2e
 
-## Development server
+## App requirements
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Build an app where a user can signin and add notes. Notes can be categorised.
 
-## Code scaffolding
+__App functionality__
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* User signin
+* User / App settings
+* Authentication via a fake api
+* CRUD operations of a note (to a fake database) via api
+* CRUD operations of a category (to a fake database) via api
+* Routing
+* Run things in a web worker
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Architecture (layers)
 
-## Running unit tests
+### View
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+* Uses a framework to display a view
+* Component based
+  * Dumb and Smart components
+* Uses reactive state to display data
+* Send new state to the store
 
-## Running end-to-end tests
+### Application Services
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+* Services related to the application
+  * Api services for ajax requests
+  * Services for manipulating state for the view (make a users name all uppercase)
 
-## Further help
+### Store
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+* Holds the state
+  * State is immutable
+* Reactive
+
+### Domain
+
+* Business logic via services
+* Represents the state (structure of the data)
+* Consist of entities
+
+## Objectives / Goals
+
+* Try to make the layers Domain, Store & Application Services framework independant
+
+
+# Other notes:
+
+
+
+__Store:__ Ability to add, update, remove from state. Reactive, notify subscribers.
+
+__State:__ The state object or array of objects
+
+__Model:__ Basic template of an entity with state. Methods that help get or set state.
+
+__Service:__ Methods
+
+Domain Layer:
+* business logic
+* should be agnostic to the view
+* consist of entities and domain services.
+
+
+Model. Entity. Service.
+
+Repository:
+* Fetch / Save the data into a source (either API or database)
+
+Models: 
+* will usually have data / state
+* methods that help to get/set data from the object
+
+Services:
+* Methods to perform operations with one or more models
+
+
+
+Model: Fields that belong to the object, methods that help to get/set data from the object (a fullname accessor that returns first + last name)
+
+Service: Methods to perform operations with one or more models, see 'unit of work', transactions, etc...
+
+Employee::create should just take a set of data, perform model validation if necessary, and return an Employee Object.
+
+EmployeeService::hireEmployee might create the employee, send them a welcome email, create a mailbox, make them a sandwich, etc... it may return the set of data, or a result code, etc...
+
+This can also affect validation:
+
+Model Validation: Employee must have a id, first and last name, and birthday
+
+Service Validation: Employees for the bartender position must be 21 or over, and approved by a manager.
