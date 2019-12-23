@@ -16,7 +16,8 @@ __App functionality__
 * CRUD operations of a category (to a fake database) via api
 * Some users will only have read access, others will have read & write
 * Routing
-* Run things in a web worker
+* Search all notes
+  * Use web worker so not to block UI thread
 
 __Most common features / functionality in apps__
 
@@ -27,6 +28,7 @@ located in._
 * User permissions to access resources / features of the app __(Domain)__
 * User authentication / authorization __(Application services)__
 * Ajax requests __(Application services)__
+  * https://rxjs-dev.firebaseapp.com/api/ajax/ajax
 * Utility functions __(Application services)__
 * Routing __(App / View)__
 * Shared UI components (design system) __(App / View)__
