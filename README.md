@@ -1,6 +1,9 @@
 # Layer architecture for web apps
 
 * https://medium.com/hackernoon/architecting-single-page-applications-b842ea633c2e
+* https://medium.com/@bojzi/anatomy-of-a-large-angular-application-f098e5e36994
+* https://blog.strongbrew.io/A-scalable-angular2-architecture/
+* 
 
 ## App requirements
 
